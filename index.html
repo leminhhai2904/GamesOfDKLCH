@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Hub - Hand Control Gaming Platform</title>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <!-- MediaPipe -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎮 Game Hub</h1>
+            <p>Chơi game với điều khiển tay qua camera - Hand Control Gaming Platform</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-grid">
+            <!-- Camera Section -->
+            <div class="camera-section">
+                <div class="camera-header">
+                    🎥 Phát hiện tay (Hand Detection)
+                </div>
+                
+                <div class="camera-container">
+                    <!-- Video hidden - chỉ để lấy stream -->
+                    <video id="video" width="640" height="480"></video>
+                    
+                    <!-- Canvas để vẽ -->
+                    <canvas id="canvas" width="640" height="480"></canvas>
+                    
+                    <!-- Hiển thị số ngón tay -->
+                    <div class="finger-count" id="finger-count">?</div>
+                </div>
+
+                <!-- Controls -->
+                <div class="camera-controls">
+                    <button id="start-btn" class="btn btn-primary">▶️ Bắt đầu camera</button>
+                    <button id="stop-btn" class="btn btn-secondary" disabled>⏹️ Dừng camera</button>
+                </div>
+            </div>
+
+            <!-- Games Section -->
+            <div class="games-section">
+                <h2 class="games-title">🎯 Danh sách trò chơi</h2>
+                <div class="game-grid" id="game-grid">
+                    <!-- Games will be rendered here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Modal -->
+    <div class="modal" id="game-modal">
+        <div class="modal-content" id="modal-game-content">
+            <!-- Modal content will be rendered here -->
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/hand-detector.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
