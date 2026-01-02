@@ -4,8 +4,8 @@
 
 class GameHubApp {
     constructor() {
-        this.handDetector = null;
         this.currentGame = null;
+        
         this.games = [
             {
                 id: 'dino',
@@ -68,91 +68,46 @@ class GameHubApp {
     async initialize() {
         try {
             this.setupEventListeners();
-            await this.initializeHandDetector();
             this.renderGames();
             console.log('Ứng dụng đã khởi tạo thành công');
         } catch (error) {
             console.error('Lỗi khởi tạo:', error);
-            this.showStatus('Lỗi khởi tạo ứng dụng: ' + error, 'error');
         }
     }
 
     /**
-     * Khởi tạo Hand Detector
+     * Kết nối WebSocket tới Windows app
      */
-    async initializeHandDetector() {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const videoElement = document.getElementById('video');
-                const canvasElement = document.getElementById('canvas');
 
-                this.handDetector = new HandDetector({
-                    detection_confidence: 0.5,
-                    tracking_confidence: 0.3,
-                    clickCooldown: 0.3,
-                    onFingerCountChange: (count) => this.updateFingerCount(count),
-                    onFingerCountZero: () => this.handleZeroFingerClick()
-                });
-
-                await this.handDetector.initialize(videoElement, canvasElement);
-                this.showStatus('Hệ thống phát hiện tay đã sẵn sàng', 'success');
-                resolve(true);
-            } catch (error) {
-                this.showStatus('Không thể khởi động camera: ' + error, 'error');
-                reject(error);
-            }
-        });
-    }
 
     /**
-     * Cập nhật số ngón tay
+     * Cập nhật trạng thái WebSocket trên UI
      */
-    updateFingerCount(count) {
-        const fingerCountEl = document.getElementById('finger-count');
-        if (fingerCountEl) {
-            if (count === -1) {
-                fingerCountEl.textContent = '?';
-                fingerCountEl.style.borderColor = '#999';
-            } else {
-                fingerCountEl.textContent = count;
-                fingerCountEl.style.borderColor = count === 0 ? '#FF6B6B' : '#667eea';
-            }
-        }
-    }
+
 
     /**
-     * Xử lý khi phát hiện 0 ngón (click)
+     * Khởi tạo Hand Detector (không dùng nữa - đã xóa)
      */
-    handleZeroFingerClick() {
-        // Flash effect khi click
-        const fingerCountEl = document.getElementById('finger-count');
-        if (fingerCountEl) {
-            fingerCountEl.style.background = 'rgba(255, 107, 107, 0.3)';
-            setTimeout(() => {
-                fingerCountEl.style.background = 'rgba(0, 0, 0, 0.7)';
-            }, 100);
-        }
-        
-        console.log('Click từ camera được kích hoạt!');
-    }
+
+
+    /**
+     * Cập nhật số ngón tay (chỉ để display status)
+     */
+
+
+    /**
+     * Xử lý khi phát hiện 0 ngón (click) - từ Windows app
+     */
+
 
     /**
      * Thiết lập event listeners
      */
+    /**
+     * Thiết lập event listeners
+     */
     setupEventListeners() {
-        // Start button
-        const startBtn = document.getElementById('start-btn');
-        if (startBtn) {
-            startBtn.addEventListener('click', () => this.startDetection());
-        }
-
-        // Stop button
-        const stopBtn = document.getElementById('stop-btn');
-        if (stopBtn) {
-            stopBtn.addEventListener('click', () => this.stopDetection());
-        }
-
-        // Game cards
+        // Game cards click
         document.addEventListener('click', (e) => {
             const gameCard = e.target.closest('.game-card');
             if (gameCard) {
@@ -183,35 +138,6 @@ class GameHubApp {
                 }
             });
         }
-    }
-
-    /**
-     * Bắt đầu phát hiện tay
-     */
-    async startDetection() {
-        try {
-            const result = await this.handDetector.start();
-            if (result) {
-                this.showStatus('Đang phát hiện tay...', 'success');
-                document.getElementById('start-btn').disabled = true;
-                document.getElementById('stop-btn').disabled = false;
-                document.getElementById('canvas').style.display = 'block';
-            }
-        } catch (error) {
-            this.showStatus('Lỗi: ' + error, 'error');
-        }
-    }
-
-    /**
-     * Dừng phát hiện tay
-     */
-    stopDetection() {
-        this.handDetector.stop();
-        this.showStatus('Đã dừng phát hiện tay', 'info');
-        document.getElementById('start-btn').disabled = false;
-        document.getElementById('stop-btn').disabled = true;
-        document.getElementById('canvas').style.display = 'none';
-        this.updateFingerCount(-1);
     }
 
     /**
@@ -300,10 +226,7 @@ class GameHubApp {
         const game = this.games.find(g => g.id === gameId);
         if (!game) return;
 
-        // Dừng phát hiện tay trước khi chơi
-        if (this.handDetector.isActive()) {
-            this.stopDetection();
-        }
+
 
         // Mở game trong tab mới hoặc iframe
         window.open(game.file, '_blank');
