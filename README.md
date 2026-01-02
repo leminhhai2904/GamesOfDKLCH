@@ -1,4 +1,4 @@
-# Hand Detector App & Mini Games
+# Kho Games của ĐKLCH
 
 ## 1. Yêu cầu hệ thống
 - Python 3.8 trở lên
@@ -54,5 +54,5 @@ python hand_detector_app.py
 - Nếu không chạy được, hãy kiểm tra lại phiên bản Python và các thư viện đã cài đặt.
 
 ---
-Mọi thắc mắc vui lòng liên hệ người phát triển để được hỗ trợ thêm.
-Sản phẩm này không phải là thuốc và không có tác dụng thay thế thuốc chữa bệnh!
+*Mọi thắc mắc vui lòng liên hệ người phát triển để được hỗ trợ thêm.  
+Sản phẩm này không phải là thuốc và không có tác dụng thay thế thuốc chữa bệnh!*
