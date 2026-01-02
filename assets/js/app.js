@@ -9,12 +9,12 @@ class GameHubApp {
         this.games = [
             {
                 id: 'dino',
-                name: 'Dino T-Rex',
+                name: 'Dino tập nhảy',
                 emoji: '🦕',
-                description: 'Điều khiển khủng long T-Rex để tránh các chướng ngại vật',
+                description: 'Điều khiển khủng long T-Rex cute để tránh các chướng ngại vật',
                 instructions: [
                     'Nắm chặt tay (0 ngón) để nhảy',
-                    'Tránh các cactus và đại bàng',
+                    'Tránh các cây xương rồng và đại bàng',
                     'Kiếm điểm bằng cách chạy càng lâu càng tốt'
                 ],
                 file: 'games/dino/index.html',
